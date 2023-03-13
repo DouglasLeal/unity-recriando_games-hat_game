@@ -15,10 +15,12 @@ public class Hat : MonoBehaviour
     [SerializeField]
     private float maxDistance;
 
+    private GameController gameController;
 
     private void Start()
     {
         SetMinAndMaxX();
+        gameController = FindObjectOfType<GameController>();
     }
 
     void Update()
@@ -29,7 +31,7 @@ public class Hat : MonoBehaviour
 
     private void DragTouch()
     {
-        if(Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Moved)
+        if(gameController.gameStarted && Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Moved)
         {
             Vector2 touchDeltaPosition = Input.GetTouch(0).deltaPosition;
             transform.Translate(touchDeltaPosition.x * speed * Time.deltaTime, 0, 0);

@@ -14,6 +14,8 @@ public class BallGenerator : MonoBehaviour
 
     private Vector2 screenWidth;
 
+    private GameController gameController;
+
 
     private void Awake()
     {
@@ -22,6 +24,7 @@ public class BallGenerator : MonoBehaviour
 
     private void Start()
     {
+        gameController = FindObjectOfType<GameController>();
         InvokeRepeating("GenerateInvoke", 2, Random.Range(1, 3));
     }
 
@@ -39,8 +42,11 @@ public class BallGenerator : MonoBehaviour
 
     private IEnumerator Generate()
     {
-        yield return new WaitForSeconds(2);
-        transform.position = new Vector2(Random.Range(-screenWidth.x + lateralMargin, screenWidth.x - lateralMargin), transform.position.y);
-        Instantiate(ballPrefab, transform.position, Quaternion.identity);
+        if (gameController.gameStarted)
+        {
+            yield return new WaitForSeconds(0);
+            transform.position = new Vector2(Random.Range(-screenWidth.x + lateralMargin, screenWidth.x - lateralMargin), transform.position.y);
+            Instantiate(ballPrefab, transform.position, Quaternion.identity);
+        }
     }
 }
