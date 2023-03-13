@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameController : MonoBehaviour
 {
@@ -10,7 +11,10 @@ public class GameController : MonoBehaviour
     [SerializeField]
     private float startTime;
 
-    public bool gameStarted = true;
+    public bool gameStarted = false;
+
+    [SerializeField]
+    private GameObject panelMainMenu;
 
     private void Start()
     {
@@ -40,5 +44,19 @@ public class GameController : MonoBehaviour
             gameStarted = false;
         }
         
+    }
+
+    public void ButtonExit()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Application.Quit();
+        }
+    }
+
+    public void ButtonStartGame()
+    {
+        gameStarted = true;
+        panelMainMenu.SetActive(false);
     }
 }
