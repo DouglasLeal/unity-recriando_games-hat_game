@@ -70,10 +70,7 @@ public class GameController : MonoBehaviour
 
     public void ButtonExit()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            Application.Quit();
-        }
+        Application.Quit();
     }
 
     public void ButtonStartGame()
@@ -89,6 +86,7 @@ public class GameController : MonoBehaviour
         panelPause.SetActive(true);
         panelPlay.SetActive(false);        
         gameStarted = false;
+        Time.timeScale = 0;
     }
 
     public void ButtonResume()
@@ -96,6 +94,7 @@ public class GameController : MonoBehaviour
         panelPlay.SetActive(true);
         panelPause.SetActive(false);
         gameStarted = true;
+        Time.timeScale = 1;
     }
 
     public void ButtonBackMainMenu()
