@@ -6,10 +6,16 @@ using UnityEngine.UI;
 public class GameController : MonoBehaviour
 {
     private int score = 0;
+    private int maiorPontuacao;
     public float currentTime = 30;
 
     [SerializeField]
     private float startTime;
+
+    [SerializeField]
+    private Text textoScore;
+    [SerializeField]
+    private Text textoHighcore;
 
     public bool gameStarted = false;
 
@@ -25,6 +31,10 @@ public class GameController : MonoBehaviour
     private void Start()
     {
         currentTime = startTime;
+        maiorPontuacao = PlayerPrefs.GetInt("highscore");
+        textoHighcore.text = $"Highscore: {maiorPontuacao}";
+        maiorPontuacao.ToString();
+        textoScore.text = score.ToString();
     }
 
     private void Update()
@@ -41,6 +51,7 @@ public class GameController : MonoBehaviour
     public void Pontuar()
     {
         score++;
+        textoScore.text = score.ToString();
     }
 
     public void CountDownTime()
@@ -52,6 +63,7 @@ public class GameController : MonoBehaviour
         else
         {
             gameStarted = false;
+            SaveScore();
         }
         
     }
@@ -74,8 +86,8 @@ public class GameController : MonoBehaviour
 
     public void ButtonPause()
     {
-        panelPlay.SetActive(false);
         panelPause.SetActive(true);
+        panelPlay.SetActive(false);        
         gameStarted = false;
     }
 
@@ -92,4 +104,12 @@ public class GameController : MonoBehaviour
         panelPause.SetActive(false);
         panelGameOver.SetActive(false);
     }
+
+    private void SaveScore()
+    {
+        if(score > maiorPontuacao)
+        {
+            PlayerPrefs.SetInt("highscore", score);
+        }        
+    }   
 }
