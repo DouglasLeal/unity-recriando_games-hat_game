@@ -28,7 +28,7 @@ public class Ball : MonoBehaviour
         }
     }
 
-    private void DestruirObjeto()
+    public void DestruirObjeto()
     {
         Destroy(gameObject);
     }

@@ -28,8 +28,11 @@ public class GameController : MonoBehaviour
     [SerializeField]
     private GameObject panelGameOver;
 
+    private Hat hat;
+
     private void Start()
     {
+        hat = FindObjectOfType<Hat>();
         currentTime = startTime;
         maiorPontuacao = PlayerPrefs.GetInt("highscore");
         textoHighcore.text = $"Highscore: {maiorPontuacao}";
@@ -41,7 +44,7 @@ public class GameController : MonoBehaviour
     {
         CountDownTime();
 
-        if(currentTime <= 0)
+        if(currentTime <= 0 & gameStarted)
         {
             panelPlay.SetActive(false);
             panelGameOver.SetActive(true);
@@ -63,6 +66,7 @@ public class GameController : MonoBehaviour
         else
         {
             gameStarted = false;
+            Time.timeScale = 0;
             SaveScore();
         }
         
@@ -75,10 +79,13 @@ public class GameController : MonoBehaviour
 
     public void ButtonStartGame()
     {
+        Reiniciar();
         panelMainMenu.SetActive(false);
         panelPlay.SetActive(true);
+        panelGameOver.SetActive(false);
         currentTime = startTime;
         gameStarted = true;
+        Time.timeScale = 1;
     }
 
     public void ButtonPause()
@@ -99,9 +106,11 @@ public class GameController : MonoBehaviour
 
     public void ButtonBackMainMenu()
     {
-        panelMainMenu.SetActive(true);
         panelPause.SetActive(false);
         panelGameOver.SetActive(false);
+        panelMainMenu.SetActive(true);        
+
+        Reiniciar();
     }
 
     private void SaveScore()
@@ -111,4 +120,17 @@ public class GameController : MonoBehaviour
             PlayerPrefs.SetInt("highscore", score);
         }        
     }   
+
+    private void Reiniciar()
+    {
+        score = 0;
+        textoScore.text = score.ToString();
+        hat.ReiniciarPosicao();
+
+        var bolas = FindObjectsOfType<Ball>();
+        foreach (var bola in bolas)
+        {
+            bola.DestruirObjeto();
+        }
+    }
 }

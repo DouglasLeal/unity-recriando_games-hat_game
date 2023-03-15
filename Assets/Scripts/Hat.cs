@@ -51,4 +51,9 @@ public class Hat : MonoBehaviour
 
         if (transform.position.x > maxX) transform.position = new Vector2(maxX, transform.position.y);
     }
+
+    public void ReiniciarPosicao()
+    {
+        transform.position = new Vector2(0, -2.203f);
+    }
 }
